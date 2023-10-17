@@ -1,0 +1,77 @@
+package com.example.blogsystemtest.domain.entity;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.Date;
+
+/**
+ * 文章表
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@TableName("fe_article")
+@Accessors(chain = true)
+public class Article{
+
+    @TableId
+    private Long id;
+    //标题
+    private String title;
+    //文章内容
+    private String content;
+    //文章摘要
+    private String summary;
+    //所属分类id
+    private Long categoryId;
+
+    @TableField(exist = false)
+    //表示数据库中没有
+    private String categoryName;
+    //缩略图
+    private String thumbnail;
+    //是否置顶（0否，1是）
+    private String isTop;
+    //状态（0已发布，1草稿）
+    private String status;
+    //访问量
+    private Long viewCount;
+    //是否允许评论 1是，0否
+    private String isComment;
+    private String filePath;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Long createBy;
+
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    //表示更新实体类其他数据时就会被填充
+    private Long updateBy;
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
+    //删除标志（0代表未删除，1代表已删除）
+    private Integer delFlag;
+
+    private Long likeNum;
+
+    public Article(Long id, long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
+
+    public Article(Long id, Long likeNum) {
+        this.id = id;
+        this.likeNum = likeNum;
+    }
+}
+
